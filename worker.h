@@ -9,6 +9,7 @@ public:
 	~worker();
 	worker(std::string fami, std::string namei, std::string onamei, std::string positioni, int yeari);
 	worker(const worker& copy);
+	void change(int id, std::string znach);
 	void setpar();
 	void setpar(std::string fami, std::string namei, std::string onamei, std::string positioni, int yeari);
 	void getpar();

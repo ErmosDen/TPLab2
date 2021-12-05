@@ -139,7 +139,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ffstream.cpp" />
+    <ClCompile Include="keeper.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="worker.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="elem.h" />
+    <ClInclude Include="ffstream.h" />
+    <ClInclude Include="keeper.h" />
+    <ClInclude Include="worker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

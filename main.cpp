@@ -7,10 +7,12 @@
 
 int main(void) {
 
-    int choose1, choose2;
+    int choose1;
     int id1, id2;
+    int year;
     std::string znach;
     keeper keep;
+    ffstream fstr;
     setlocale(LC_ALL, "rus");
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
@@ -27,11 +29,11 @@ int main(void) {
         switch (choose1)
         {
         case 1:
-                worker *work;
-                work = new worker;
-                work->setpar();
-                keep.push(work);
-                break;
+            worker * work;
+            work = new worker;
+            work->setpar();
+            keep.push(work);
+            break;
         case 2:
             if (keep.getsize() == 0) { std::cout << "Нечего изменять" << std::endl; break; }
             std::cout << "Какую запись изменить, всего записей - " << keep.getsize() - 1 << " нумерация с 0" << std::endl;
@@ -45,6 +47,7 @@ int main(void) {
             getline(std::cin, znach);
             std::cin.ignore(32767, '\n');
             keep[id1]->change(id2, znach);
+            keep.sort();
             break;
         case 3:
             std::cout << "Какую запись удалить, всего записей - " << keep.getsize() - 1 << " нумерация с 0" << std::endl;
@@ -59,10 +62,13 @@ int main(void) {
             }
             break;
         case 5:
-            
+            std::cout << "Введите число лет стажа " << std::endl;
+            std::cin >> year;
+            std::cin.ignore(32767, '\n');
+            keep.showExp(year);
             break;
         case 6:
-            
+            fstr.scantext();
             break;
         case 0:
             break;

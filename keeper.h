@@ -1,7 +1,8 @@
-#pragma once
+#pragma warning(disable : 4996)
 #include "elem.h"
 #include <iostream>
 #include <ctime> 
+#include <time.h>
 class keeper
 {
 public:
@@ -12,10 +13,15 @@ public:
 private:
 	int size;
 	elem* head;
-	elem* node;
 public:
-	keeper operator++(int);
+	//keeper operator++(int);
+	void push(worker* w);
+
+	worker* operator[] (const int index);
+
 	void rm(int index);
-	void showExp(int year)
+	void sort();
+	void showExp(int year);
+	int getsize();
 };
 

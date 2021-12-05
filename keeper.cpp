@@ -41,6 +41,7 @@ void keeper::rm(int index)
 		if (index == 0)
 		{
 			head = buf->next;
+			head->prev = 0;
 			buf->c_data->~worker();
 			size--;
 			return;
@@ -50,9 +51,11 @@ void keeper::rm(int index)
 		}
 		buf1 = buf->next; //переходим на удаляемый элемент
 		buf->next = buf1->next;//присавеваем указатель на следующий
+
 		buf1->c_data->~worker();
 		size--;
 	}
+	sort();
 }
 
 
@@ -61,9 +64,10 @@ void keeper::push(worker* w) {
 	newElem = new elem;
 	if (size == 0)
 	{
-		newElem->c_data = f;
+		newElem->c_data = w;
 		size++;
 		newElem->next = 0;
+		newElem->prev = 0;
 		head = newElem;
 	}
 	else
@@ -73,19 +77,95 @@ void keeper::push(worker* w) {
 		{
 			buf = buf->next;
 		}
-		newElem->c_data = f;
+		newElem->c_data = w;
 		newElem->next = 0;
+		newElem->prev = buf;
 		buf->next = newElem;
 		size++;
 	}
-
-}	
+	sort();
+}
 
 
 void keeper::showExp(int year) 
 {
-	std::time_t t = std::time(nullptr);
-	std::tm* const pTInfo = std::localtime(&t);
-	int cYear = 1900 + pTInfo->tm_year; //взяли текущий год
 
+	time_t theTime = time(NULL);
+	struct tm* aTime = localtime(&theTime);
+
+
+#pragma warning(disable : 4996)
+	int cYear = aTime->tm_year + 1900; //взяли текущий год
+	int num=0;
+
+	std::cout << "Текущий год " << cYear << std::endl;
+	if (size == 0) {
+		std::cout << "Нечего выводить" << std::endl;
+		return;
+	}
+	elem* buf = head;
+	while (buf != NULL)
+	{
+		if ((cYear - buf->c_data->getYear()) >= year) 
+		{
+			buf->c_data->getpar();
+			num++;
+		}
+		buf = buf->next;
+	}
+	if (num == 0) 
+	{
+		std::cout << "Работников не найдено" << std::endl;
+		return;
+	}
+}
+
+
+int keeper::getsize()
+{
+	return size;
+}
+
+worker* keeper::operator[] (const int index)
+{
+	elem* buf = head;
+	if (((index) >= size) || (index < 0)) {
+		std::cout << "Неверный индекс" << std::endl;
+	}
+	else {
+		for (int i = 0; i < index; i++) {
+			buf = buf->next;
+		}
+		return (buf->c_data);
+	}
+}
+
+void keeper::sort()
+{
+	if (size <= 1)
+	{
+		std::cout << "Нечего сортировать" << std::endl;
+		return;
+	}
+	elem* left = head;                 //Первый элемент — это пусть будет голова
+	elem* right = head->next;          //Второй элемент — это пусть будет следующий за головой элемент
+
+	elem* temp = new elem;              //Временное звено для хранения переставляемого всех значений переставляемого звена
+
+	while (left->next) 
+	{                 //Обходим по всем звеньям, за исключением крайнего правого
+		while (right) 
+		{              //Обходим по всем звеньям, включая крайний правый (по всем относительно первого левого на текущий момент)
+			std::string lper = left->c_data->getfam();
+			std::string rper = right->c_data->getfam();
+			if (lper.compare(rper)>0) {        //Проверяем необходимость перестановки
+				temp->c_data = left->c_data;              //И переставляем все внутренние элементы, за исключением указателей связи, местами
+				left->c_data = right->c_data;             //Сейчас у нас имеется только x, поэтому только его
+				right->c_data = temp->c_data;             //иначе бы  нужно было это проделывать для каждого несвязующего элемента
+			}
+			right = right->next;                    //не забываем направлять указатель на следующий элемент (по подобию инкремента), иначе цикл зависнет
+		}
+		left = left->next;                              //не забываем направлять указатель на следующий элемент (по подобию инкремента), иначе цикл зависнет
+		right = left->next;                             //Поскольку второй указатель убежал немного вперёд, обязательно возвращаем его назад, это следующий элемент относительно текущего первог
+	}
 }

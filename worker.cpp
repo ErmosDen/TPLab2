@@ -54,12 +54,12 @@ void worker::setpar(std::string fami, std::string namei, std::string onamei, std
 
 void worker::getpar()
 {
-	std::cout << "Информация о машине:" << std::endl;
-	std::cout << "Фамилия - " << fname << std::endl;
-	std::cout << "Имя - " << name << std::endl;
-	std::cout << "Отчество - " << oname << std::endl;
-	std::cout << "Должность - " << position << std::endl;
-	std::cout << "год поступления на работу - " << year << std::endl;
+	std::cout << "Информация о работнике:" << std::endl;
+	std::cout << "[1]Фамилия - " << fname << std::endl;
+	std::cout << "[2]Имя - " << name << std::endl;
+	std::cout << "[3]Отчество - " << oname << std::endl;
+	std::cout << "[4]Должность - " << position << std::endl;
+	std::cout << "[5]год поступления на работу - " << year << std::endl;
 	std::cout << std::endl;
 }
 
@@ -73,4 +73,28 @@ int worker::getYear()
 	return this->year;
 }
 
+
+void worker::change(int id, std::string znach) {
+	switch (id)
+	{
+	case 1:
+		fname = znach;
+		break;
+	case 2:
+		name = znach;
+		break;
+	case 3:
+		oname = znach;
+		break;
+	case 4:
+		position = znach;
+		break;
+	case 5:
+		year = std::stoi(znach);
+		break;
+	default:
+		std::cout << "неверный ввод" << std::endl;
+		break;
+	}
+}
 
