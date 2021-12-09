@@ -18,8 +18,40 @@ keeper::~keeper()
 	}
 }
 
+keeper::keeper(const keeper& copy)
+{
+	head = copy.head;
+	elem* tmp1 = head;
+	elem* tmp2 = copy.head;
+	elem* newhead = tmp1;
+	if (copy.head == nullptr) {
+		head = copy.head;
+		size = copy.size;
+		return;
+	}
+	if (copy.head->next == 0) //Если в списке 1 элемент
+	{
+		tmp1->c_data = tmp2->c_data;
+		tmp1->next = 0;
+		size = copy.size;
+		return;
+	}
+	while (tmp2->next != 0)
+	{
+		tmp1->c_data=tmp2->c_data;
+		tmp1->next = tmp2->next;
+		tmp1 = tmp1->next;
+		tmp2 = tmp2->next;
+	}
+	tmp1->c_data=tmp2->c_data;
+	tmp1->next=0;
+	size = copy.size;
+	return;
+	std::cout << "Конструктор копирования keeper" << std::endl;
+}
 
-void keeper::rm(int index)
+
+void keeper::push(int index)
 {
 	elem* buf = head;
 	elem* buf1;

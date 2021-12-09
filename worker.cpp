@@ -31,7 +31,6 @@ worker::worker(std::string fami, std::string namei, std::string onamei, std::str
 
 void worker::setpar()
 {
-	std::cin.ignore(32767, '\n');
 	std::cout << "Введите фамилию рабочего" << std::endl;
 	getline(std::cin, fname);
 	std::cout << "Введите имя рабочего" << std::endl;

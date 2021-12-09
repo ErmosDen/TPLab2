@@ -53,7 +53,7 @@ int main(void) {
             std::cout << "Какую запись удалить, всего записей - " << keep.getsize() - 1 << " нумерация с 0" << std::endl;
             std::cin >> id1;
             std::cin.ignore(32767, '\n');
-            keep.rm(id1);
+            keep.push(id1);
             break;
         case 4:
             for (int i = 0; i < keep.getsize(); i++)

@@ -25,16 +25,24 @@ void ffstream::scantext()
         else
         {
             std::stringstream iss;
+            char c;
             std::string token;
+            int flag = 0;
             while (getline(ifs, str))
             {
                 iss << str;
-                    while (std::getline(iss, token, '.')) 
+                do {
+                    c = iss.get();
+                    if (c == ',') { flag = 1; }
+                    token.push_back(c);
+                    if (c == '.' || c=='?' || c=='!')
                     {
-                        if (token.find(',') == std::string::npos) {
+                        if (flag == 0)
                         std::cout << token << std::endl;
-                        }
+                        flag = 0;
+                        token.clear();
                     }
+                } while (c!= EOF);
                 iss.clear();
             }
             ifs.close();

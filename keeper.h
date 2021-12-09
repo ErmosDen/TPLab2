@@ -9,6 +9,7 @@ public:
 	keeper();
 	~keeper();
 	keeper(int size);
+	keeper(const keeper& copy);
 
 private:
 	int size;
@@ -16,10 +17,10 @@ private:
 public:
 	//keeper operator++(int);
 	void push(worker* w);
+	void push(int index);
 
 	worker* operator[] (const int index);
 
-	void rm(int index);
 	void sort();
 	void showExp(int year);
 	int getsize();
